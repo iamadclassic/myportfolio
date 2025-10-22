@@ -33,31 +33,37 @@ const Navbar = () => {
     },
     logoWrapper: {
       position: 'absolute',
-      left: '50%',
-      transform: 'translateX(-50%)',
+      ...(isMobile
+        ? {
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }
+        : {
+            left: '0',
+            transform: 'none',
+          }),
       zIndex: 1000,
     },
-  navLinks: {
-  display: isMobile ? (isOpen ? 'flex' : 'none') : 'flex',
-  flexDirection: isMobile ? 'column' : 'row',
-  position: isMobile ? 'fixed' : 'static',
-  top: isMobile ? '64px' : 'auto',
-  left: 0,
-  width: '100vw',
-  maxWidth: '100vw',
-  backgroundColor: isMobile ? '#001F3F' : 'transparent',
-  padding: isMobile ? '1rem 0' : 0,
-  margin: 0,
-  borderRadius: isMobile ? '0 0 8px 8px' : '0',
-  justifyContent: 'center',
-  alignItems: isMobile ? 'center' : 'unset',
-  gap: '1.5rem',
-  zIndex: 999,
-  overflowX: 'hidden',  // key to prevent horizontal scroll inside nav
-  boxSizing: 'border-box',
-},
-
-
+    navLinks: {
+      display: isMobile ? (isOpen ? 'flex' : 'none') : 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      position: isMobile ? 'fixed' : 'static',
+      top: isMobile ? '64px' : 'auto',
+      left: 0,
+      width: '100vw',
+      maxWidth: '100vw',
+      backgroundColor: isMobile ? '#001F3F' : 'transparent',
+      padding: isMobile ? '1rem 0' : 0,
+      margin: 0,
+      borderRadius: isMobile ? '0 0 8px 8px' : '0',
+      justifyContent: 'center',
+      alignItems: isMobile ? 'center' : 'unset',
+      gap: '1.5rem',
+      zIndex: 999,
+      overflowX: 'hidden',
+      boxSizing: 'border-box',
+      listStyle: 'none', // 🔹 removes bullet points
+    },
     link: {
       color: '#7FDBFF',
       textDecoration: 'none',
@@ -79,14 +85,14 @@ const Navbar = () => {
         ☰
       </button>
 
-      {/* Center: Logo */}
+      {/* Center (mobile) or Left (desktop): Logo */}
       <div style={styles.logoWrapper}>
         <a href="#home" aria-label="Home">
           <LogoT size={40} color="#7FDBFF" />
         </a>
       </div>
 
-      {/* Right: Nav links (only visible on desktop) */}
+      {/* Navigation Links */}
       <ul style={styles.navLinks}>
         <li><a href="#home" style={styles.link}>Home</a></li>
         <li><a href="#about" style={styles.link}>About</a></li>
