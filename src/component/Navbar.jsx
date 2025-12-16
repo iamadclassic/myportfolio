@@ -7,9 +7,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(prev => !prev);
 
-  // 🔽 Hide navbar on scroll down (mobile only)
+  // 🔽 Hide navbar + close menu on scroll (mobile only)
   useEffect(() => {
     if (!isMobile) return;
 
@@ -20,7 +20,7 @@ const Navbar = () => {
         setShowNavbar(true);
       } else if (window.scrollY > lastScrollY) {
         setShowNavbar(false);
-        setIsOpen(false); // close menu when scrolling
+        setIsOpen(false);
       } else {
         setShowNavbar(true);
       }
@@ -39,7 +39,6 @@ const Navbar = () => {
       position: 'fixed',
       top: isMobile && !showNavbar ? '-80px' : '0',
       left: 0,
-      right: 0,
       zIndex: 1000,
       display: 'flex',
       alignItems: 'center',
@@ -71,32 +70,23 @@ const Navbar = () => {
       lineHeight: 1,
       zIndex: 1001,
     },
-    logoWrapper: {
-      position: 'absolute',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      zIndex: 1000,
-    },
-  navLinks: {
-  display: isMobile ? (isOpen ? 'flex' : 'none') : 'flex',
-  flexDirection: isMobile ? 'column' : 'row',
-  position: isMobile ? 'fixed' : 'static',
-  top: isMobile ? '64px' : 'auto',
-  left: 0,
-  width: '100vw',
-  maxWidth: '100vw',
-  backgroundColor: isMobile ? '#001F3F' : 'transparent',
-  padding: isMobile ? '1rem 0' : 0,
-  margin: 0,
-  borderRadius: isMobile ? '0 0 8px 8px' : '0',
-  justifyContent: 'center',
-  alignItems: isMobile ? 'center' : 'unset',
-  gap: '1.5rem',
-  zIndex: 999,
-  overflowX: 'hidden',  // key to prevent horizontal scroll inside nav
-  boxSizing: 'border-box',
-},
 
+    navLinks: {
+      display: isMobile ? (isOpen ? 'flex' : 'none') : 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      position: isMobile ? 'fixed' : 'static',
+      top: '64px',
+      left: 0,
+      width: '100%',
+      backgroundColor: isMobile ? '#001F3F' : 'transparent',
+      padding: isMobile ? '1rem 0' : 0,
+      margin: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '1.5rem',
+      listStyle: 'none',
+      zIndex: 999,
+    },
 
     link: {
       color: '#7FDBFF',
@@ -116,7 +106,7 @@ const Navbar = () => {
         </a>
       </div>
 
-      {/* Hamburger */}
+      {/* Hamburger (mobile only) */}
       <button
         onClick={toggleMenu}
         style={styles.hamburger}
@@ -125,14 +115,7 @@ const Navbar = () => {
         ☰
       </button>
 
-      {/* Center: Logo */}
-      <div style={styles.logoWrapper}>
-        <a href="#home" aria-label="Home">
-          <LogoT size={40} color="#7FDBFF" />
-        </a>
-      </div>
-
-      {/* Right: Nav links (only visible on desktop) */}
+      {/* Navigation Links */}
       <ul style={styles.navLinks}>
         <li><a href="#home" style={styles.link}>Home</a></li>
         <li><a href="#about" style={styles.link}>About</a></li>
